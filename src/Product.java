@@ -1,16 +1,14 @@
-import java.util.ArrayList;
-
 /**
  * Created by E6520 on 2017-04-08.
  */
-public class ProductMatch implements Comparable{
-    String productName;
-    int productFitness;
+public class Product implements Comparable{
+    private String productName;
+    private int productFitness;
 
-    public ProductMatch() {
+    public Product() {
     }
 
-    public ProductMatch(String productName, int productFitness) {
+    public Product(String productName, int productFitness) {
         this.productName = productName;
         this.productFitness = productFitness;
     }
@@ -33,7 +31,7 @@ public class ProductMatch implements Comparable{
 
     @Override
     public String toString() {
-        return "ProductMatch{" +
+        return "Product{" +
                 "productName='" + productName + '\'' +
                 ", productFitness=" + productFitness +
                 '}';
@@ -41,10 +39,10 @@ public class ProductMatch implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if(o instanceof ProductMatch) {
-            if(((ProductMatch)o).productFitness > this.productFitness) {
+        if(o instanceof Product) {
+            if(((Product)o).productFitness > this.productFitness) {
                 return 1;
-            } else if(((ProductMatch)o).productFitness == this.productFitness) {
+            } else if(((Product)o).productFitness == this.productFitness) {
                 return 0;
             } else {
                 return -1;

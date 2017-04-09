@@ -1,75 +1,69 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by E6520 on 2017-04-08.
  */
 public class Main {
 
+    private static final ArrayList<String> DICTIONARY = new ArrayList<>(Arrays.asList("Syr","Waniliowy","Ser"));
+    private static final String[] OCR_RESULT = {"Svr"};
+    private static final Map<String, ArrayList<String>> REPLACEMENT_MAP = initMap();
+
+    private static Map initMap() {
+        REPLACEMENT_MAP.put("o", new ArrayList<>(Arrays.asList("O", "u", "0")));
+        REPLACEMENT_MAP.put("l", new ArrayList<>(Arrays.asList("1","ł","\\]","\\[","T")));
+        REPLACEMENT_MAP.put("y", new ArrayList<>(Arrays.asList("v")));
+        REPLACEMENT_MAP.put("v", new ArrayList<>(Arrays.asList("y")));
+    }
+
+    private static List<String> intersectionByLength(final ArrayList<String> dictionary, final String ocrResult) {
+        return dictionary.stream()
+                .filter(word -> ocrResult.length() == word.length())
+                .collect(Collectors.toList());
+    }
+
+    private static List<Product> findMatches(final ArrayList<String> sameLengthDict, final String ocrResult) {
+        ArrayList<Product> bestMatches = new ArrayList<>();
+
+        sameLengthDict.forEach((String word) -> {
+            int match = 0;
+            for (int i = 0; i < word.length(); i++) {
+                if(word.charAt(i) == ocrResult.charAt(i)) match++;
+            }
+            bestMatches.add(new Product(word, match));
+        });
+
+        return bestMatches;
+    }
+
     public static void main(String[] args) {
-        String[] ok = {"Syr","Waniliowy","cycki","Ser"};    //slownik
-        String [][] change = {
-                {"o", "O", "u"}, {"l","1","ł","\\]","\\[","T"},{"y","v"}
-        };
-        String[] s = {"Svr"};
 
-        for (int i = 0; i <s.length ; i++) {
-            int wordLength=s[i].length();
-            ArrayList <String> sameLength= new ArrayList<>();
-            for (String word : ok) {
-                if(wordLength==word.length()){
-                    sameLength.add(word);
-                }
-            }
-            String[] splitted = s[i].split("");
-            ArrayList<ProductMatch> productMatches = null;
-            int highestMatch=0;
-            for (String word : sameLength) {
-                String[] wordSplitted = word.split("");
-                int match=0;
+        for (int i = 0; i < OCR_RESULT.length ; i++) {
+            ArrayList <String> sameLength = (ArrayList<String>) intersectionByLength(DICTIONARY, OCR_RESULT[i]);
+            BestMatchesArray bestMatchesArray = new BestMatchesArray((ArrayList<Product>) findMatches(sameLength, OCR_RESULT[i]));
 
-                for (int j = 0; j < wordSplitted.length; j++) {
-                    if(wordSplitted[j].equals(splitted[j])) {
-                        match += 1;
-                    }
-                }
-                if(highestMatch<match){
-                    productMatches=new ArrayList<>();
-                    productMatches.add(new ProductMatch(word, match));
-                    highestMatch = match;
-                } else if(highestMatch == match && productMatches != null) {
-                    productMatches.add(new ProductMatch(word, match));
-                }
-            }
+            bestMatchesArray.getBestMatches().forEach(System.out::println);
 
-            if(productMatches!=null) {
-                productMatches.forEach(word -> System.out.println(word.toString()));
-            }
-            for (ProductMatch product :
-                    productMatches) {
-                if (!s[i].equals(product.getProductName())) {
-                    for (String[] iterTab : change) {
+            /*for (Product product : products) {
+                if (!OCR_RESULT[i].equals(product.getProductName())) {
+                    for (String[] iterTab : REPLACEMENT_MAP) {
                         for (int j = 0; j < iterTab.length; j++) {
-                            s[i] = s[i].replaceFirst(String.valueOf(iterTab[j]), String.valueOf(iterTab[(j + 1) % iterTab.length]));
-                            if (!s[i].equals(ok[0])) {
-                                System.out.println("NOK: " + s[0]);
+                            OCR_RESULT[i] = OCR_RESULT[i].replaceFirst(String.valueOf(iterTab[j]), String.valueOf(iterTab[(j + 1) % iterTab.length]));
+                            if (!OCR_RESULT[i].equals(DICTIONARY[0])) {
+                                System.out.println("NOK: " + OCR_RESULT[0]);
                             } else {
-                                System.out.println("OK: " + s[0]);
+                                System.out.println("OK: " + OCR_RESULT[0]);
                                 System.exit(9);
                             }
                         }
                     }
                 }
-            }
+            }*/
 
         }
-
-
-
-
-
-
-
-
     }
 }
