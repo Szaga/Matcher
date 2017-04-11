@@ -1,3 +1,5 @@
+package it.szyszka.matcher;
+
 /**
  * Created by E6520 on 2017-04-08.
  */
@@ -31,7 +33,7 @@ public class Product implements Comparable{
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "it.szyszka.matcher.Product{" +
                 "productName='" + productName + '\'' +
                 ", productFitness=" + productFitness +
                 '}';
