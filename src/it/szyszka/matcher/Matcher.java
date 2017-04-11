@@ -44,7 +44,7 @@ public class Matcher {
             for (int i = 0; i < word.length(); i++) {
                 if(word.charAt(i) == ocrResult.charAt(i)) match++;
             }
-            bestMatches.add(new Product(word, match));
+            bestMatches.add(new Product(ocrResult, word, match));
         });
 
         return bestMatches;

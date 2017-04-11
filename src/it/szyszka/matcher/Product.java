@@ -3,14 +3,17 @@ package it.szyszka.matcher;
 /**
  * Created by E6520 on 2017-04-08.
  */
-public class Product implements Comparable{
+public class Product implements Comparable {
+
+    private String productOCR;
     private String productName;
     private int productFitness;
 
     public Product() {
     }
 
-    public Product(String productName, int productFitness) {
+    public Product(String productOCR, String productName, int productFitness) {
+        this.productOCR = productOCR;
         this.productName = productName;
         this.productFitness = productFitness;
     }
@@ -33,8 +36,9 @@ public class Product implements Comparable{
 
     @Override
     public String toString() {
-        return "it.szyszka.matcher.Product{" +
-                "productName='" + productName + '\'' +
+        return "Product{" +
+                "productOCR='" + productOCR + '\'' +
+                ", productName='" + productName + '\'' +
                 ", productFitness=" + productFitness +
                 '}';
     }

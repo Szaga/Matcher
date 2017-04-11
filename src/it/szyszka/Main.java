@@ -23,7 +23,7 @@ public class Main {
                 .initializeMatcherDefaultDictionary()
                 .initializeMatcherDefaultOcrResult()
                 .doMatch().forEach(array -> {
-                    array.getBestMatches().forEach(System.out::println);
+                    array.screenOutBestMatches().forEach(System.out::println);
                 });
 
     }

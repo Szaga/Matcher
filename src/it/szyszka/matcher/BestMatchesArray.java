@@ -2,6 +2,7 @@ package it.szyszka.matcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -21,10 +22,10 @@ public class BestMatchesArray {
         }
     }
 
-    public void screenOutBestMatches() {
+    public List<Product> screenOutBestMatches() {
         Collections.sort(bestMatches);
-        final int bestMatch = bestMatches.get(bestMatches.size() - 1).getProductFitness();
-        bestMatches.stream()
+        final int bestMatch = bestMatches.get(0).getProductFitness();
+        return bestMatches.stream()
                 .filter(product -> product.getProductFitness() == bestMatch)
                 .collect(Collectors.toList());
     }
