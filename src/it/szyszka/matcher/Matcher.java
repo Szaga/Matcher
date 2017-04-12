@@ -23,7 +23,7 @@ public class Matcher {
     public ArrayList<BestMatchesArray> matchDefaultOcrResult() {
         ArrayList<BestMatchesArray> matches = new ArrayList<>();
         ocrResult.forEach(result -> matches.add(new BestMatchesArray(
-                (ArrayList<Product>) findMatches(
+                (ArrayList<ProductMatch>) findMatches(
                         (ArrayList<String>) intersectionByLength(result), result))));
         return matches;
     }
@@ -31,20 +31,20 @@ public class Matcher {
     public ArrayList<BestMatchesArray> matchExternalOcrResult(final ArrayList<String> ocrResult) {
         ArrayList<BestMatchesArray> matches = new ArrayList<>();
         ocrResult.forEach(result -> matches.add(new BestMatchesArray(
-                                        (ArrayList<Product>) findMatches(
+                                        (ArrayList<ProductMatch>) findMatches(
                                                 (ArrayList<String>) intersectionByLength(result), result))));
         return matches;
     }
 
-    private List<Product> findMatches(final ArrayList<String> sameLengthDict, final String ocrResult) {
-        ArrayList<Product> bestMatches = new ArrayList<>();
+    private List<ProductMatch> findMatches(final ArrayList<String> sameLengthDict, final String ocrResult) {
+        ArrayList<ProductMatch> bestMatches = new ArrayList<>();
 
         sameLengthDict.forEach((String word) -> {
             int match = 0;
             for (int i = 0; i < word.length(); i++) {
                 if(word.charAt(i) == ocrResult.charAt(i)) match++;
             }
-            bestMatches.add(new Product(ocrResult, word, match));
+            bestMatches.add(new ProductMatch(ocrResult, word, match));
         });
 
         return bestMatches;

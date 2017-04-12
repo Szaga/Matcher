@@ -10,27 +10,27 @@ import java.util.stream.Collectors;
  */
 public class BestMatchesArray {
 
-    private ArrayList<Product> bestMatches;
+    private ArrayList<ProductMatch> bestMatches;
 
     public BestMatchesArray() {
     }
 
-    public BestMatchesArray(ArrayList<Product> bestMatches) {
+    public BestMatchesArray(ArrayList<ProductMatch> bestMatches) {
         this.bestMatches = bestMatches;
         if(!bestMatches.isEmpty()) {
             screenOutBestMatches();
         }
     }
 
-    public List<Product> screenOutBestMatches() {
+    public List<ProductMatch> screenOutBestMatches() {
         Collections.sort(bestMatches);
-        final int bestMatch = bestMatches.get(0).getProductFitness();
+        final int bestMatch = bestMatches.get(0).getMatch();
         return bestMatches.stream()
-                .filter(product -> product.getProductFitness() == bestMatch)
+                .filter(productMatch -> productMatch.getMatch() == bestMatch)
                 .collect(Collectors.toList());
     }
 
-    public ArrayList<Product> getBestMatches() {
+    public ArrayList<ProductMatch> getBestMatches() {
         return bestMatches;
     }
 }
